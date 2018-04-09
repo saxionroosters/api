@@ -1,0 +1,23 @@
+{
+  "name": "saxionroosters-api",
+  "version": "1.0.0",
+  "description": "Backend/API for saxionroosters.nl",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesselperik/saxionroosters-api.git"
+  },
+  "author": "Wessel Perik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wesselperik/saxionroosters-api/issues"
+  },
+  "homepage": "https://github.com/wesselperik/saxionroosters-api#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
