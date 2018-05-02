@@ -1,0 +1,13 @@
+// Example setup file
+{
+  "database": {
+    "host": "host",
+    "port": 3306,
+    "url": "",
+    "database": "database",
+    "password": "password",
+    "name": "database",
+    "user": "user",
+    "connector": "mysql"
+  }
+}
