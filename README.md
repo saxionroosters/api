@@ -8,7 +8,7 @@
 
 An REST API built with Node.js and Loopback as addition to the official [Saxion REST API](http://roosters.rest.saxion.nl/). This API enables students and teachers to add their own appointments to their own schedule, and some more features are coming soon.
 
-The API explorer is available at [api.saxionroosters.nl/explorer](api.saxionroosters.nl/explorer).
+The API explorer is available at [api.saxionroosters.nl/explorer](http://api.saxionroosters.nl/explorer).
 Additional documentation (in Dutch) can be found in the [docs-repository](https://github.com/saxionroosters/docs/wiki/Saxion-Roosters-REST-API).
 
 ## Project managers
