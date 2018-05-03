@@ -1,5 +1,5 @@
 {
-  "name": "device",
+  "name": "schedule",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -9,12 +9,13 @@
     "id": {
       "type": "number"
     },
-    "deviceId": {
+    "user": {
       "type": "string",
       "required": true
     },
-    "user": {
-      "type": "string"
+    "own": {
+      "type": "boolean",
+      "required": true
     },
     "name": {
       "type": "string",
