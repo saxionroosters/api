@@ -1,6 +1,11 @@
 {
   "loopback-component-explorer": {
     "mountPath": "/explorer",
-    "generateOperationScopedModels": true
+    "generateOperationScopedModels": true,
+    "uiDirs": ["server/explorer"],
+    "apiInfo": {
+      "title": "Saxion Roosters API",
+      "description": ""
+    }
   }
 }

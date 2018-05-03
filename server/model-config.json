@@ -16,5 +16,29 @@
   "event": {
     "dataSource": "database",
     "public": true
+  },
+  "device": {
+    "dataSource": "database",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "register": true
+        }
+      }
+    }
+  },
+  "user": {
+    "dataSource": "database",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "authenticate": true
+        }
+      }
+    }
   }
 }
