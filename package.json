@@ -13,6 +13,8 @@
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "cross-env": "^5.1.4",
+    "dotenv": "^5.0.1",
     "helmet": "^3.10.0",
     "loopback": "^3.19.0",
     "loopback-boot": "^2.6.5",

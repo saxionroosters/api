@@ -1,7 +1,6 @@
-// Example setup file
 {
   "database": {
-    "host": "host",
+    "host": "api.saxionroosters.nl",
     "port": 3306,
     "url": "",
     "database": "database",
