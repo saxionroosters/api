@@ -7,8 +7,12 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "node .",
-    "posttest": "npm run lint && nsp check"
+    "start": "npm run prod",
+    "posttest": "npm run lint && nsp check",
+    "dev": "NODE_ENV=development node server/server.js",
+    "development": "npm run dev",
+    "prod": "NODE_ENV=production node server/server.js",
+    "production": "npm run prod"
   },
   "dependencies": {
     "compression": "^1.0.3",
