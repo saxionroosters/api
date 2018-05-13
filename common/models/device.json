@@ -1,6 +1,6 @@
 {
   "name": "device",
-  "base": "PersistedModel",
+  "base": "AccessToken",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -9,20 +9,60 @@
     "id": {
       "type": "number"
     },
+    "userId": {
+      "type": "number"
+    },
     "deviceId": {
       "type": "string",
       "required": true
     },
-    "user": {
-      "type": "string"
+    "account": {
+      "type": "string",
+      "required": true
     },
     "name": {
+      "type": "string",
+      "required": true
+    },
+    "validationToken": {
       "type": "string",
       "required": true
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "deviceAccount": {
+      "type": "belongsTo",
+      "model": "account",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "deleteById"
+    }
+  ],
   "methods": {}
 }

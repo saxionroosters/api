@@ -13,37 +13,17 @@
       "./mixins"
     ]
   },
+  "ACL": {
+    "dataSource": "database",
+    "public": false
+  },
   "event": {
     "dataSource": "database",
     "public": true
   },
   "device": {
     "dataSource": "database",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "create": true,
-          "register": true,
-          "list": true
-        }
-      }
-    }
-  },
-  "user": {
-    "dataSource": "database",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "authenticate": true,
-          "sendCode": true,
-          "validate": true
-        }
-      }
-    }
+    "public": true
   },
   "schedule": {
     "dataSource": "database",
@@ -58,5 +38,24 @@
         }
       }
     }
+  },
+  "account": {
+    "dataSource": "database",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "loginWithCode": true,
+          "requestCode": true,
+          "register": true,
+          "logout": true
+        }
+      }
+    }
+  },
+  "token": {
+    "dataSource": "database",
+    "public": false
   }
 }

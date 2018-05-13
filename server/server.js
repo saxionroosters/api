@@ -5,6 +5,10 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+app.use(loopback.token({
+  model: app.models.token
+}));
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
