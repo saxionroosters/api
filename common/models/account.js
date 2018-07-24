@@ -199,7 +199,7 @@ module.exports = function(Account) {
     );
     Account.remoteMethod(
         'requestCode', {
-            description: "Request a verification code to log in an user",
+            description: "Request a verification code to log in a user",
             notes: ["Sends an email to the user with a generated verification code.\n", "Returns 'true' when the verification mail is successfully send;", "otherwise returns an error (with description)."],
             http: {
                 path: '/requestCode',
@@ -223,7 +223,7 @@ module.exports = function(Account) {
     );
     Account.remoteMethod(
         'verify', {
-            description: "Verify an user with a verification code",
+            description: "Verify a user with a verification code",
             http: {
                 path: '/verify',
                 verb: 'post'
