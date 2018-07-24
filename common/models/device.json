@@ -35,6 +35,11 @@
       "type": "belongsTo",
       "model": "account",
       "foreignKey": "userId"
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "account",
+      "foreignKey": "userId"
     }
   },
   "acls": [

@@ -5,10 +5,6 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
-app.use(loopback.token({
-  model: app.models.token
-}));
-
 app.start = function() {
   // start the web server
   return app.listen(function() {
@@ -31,3 +27,10 @@ boot(app, __dirname, function(err) {
   if (require.main === module)
     app.start();
 });
+
+app.use(loopback.token({
+  model: app.models.token,
+  cookies: ['access_token'],
+  headers: ['access_token', 'X-Access-Token'],
+  params:  ['access_token']
+}));

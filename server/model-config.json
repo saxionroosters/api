@@ -23,7 +23,14 @@
   },
   "device": {
     "dataSource": "database",
-    "public": true
+    "public": true,
+    "relations": {
+      "account": {
+        "type": "belongsTo",
+        "model": "account",
+        "foreignKey": "userId"
+      }
+    }
   },
   "schedule": {
     "dataSource": "database",
