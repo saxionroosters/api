@@ -24,6 +24,8 @@
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.0.0",
     "loopback-connector-mysql": "^2.4.1",
+    "nodemailer": "^4.6.7",
+    "path": "^0.12.7",
     "serve-favicon": "^2.0.1",
     "speakeasy": "^2.0.0",
     "strong-error-handler": "^2.0.0"

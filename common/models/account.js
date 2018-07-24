@@ -1,16 +1,10 @@
 'use strict';
 var speakeasy = require('speakeasy');
+var path = require('path');
+const nodemailer = require('nodemailer');
 
 module.exports = function(Account) {
-
-    /** Intercept account creation and substitute password with a placeholder password
-	 */
-	// Account.observe('before save', function(ctx, next) {
-	// 	// Substitute password
-	// 	ctx.instance.password = "psswrd";
-	// 	// Remember to use next() to not interrupt the flow of the call
-	// 	return next();
-    // });
+    require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
     
     Account.register = function(credentials, fn) {
         findAccount(credentials, function(res) {
@@ -37,11 +31,35 @@ module.exports = function(Account) {
                 err.statusCode = 404;
                 fn(null, err);
             } else {
-                var code = speakeasy.totp({secret: 'APP_SECRET' + credentials.email});
-                console.log('Two factor code for ' + credentials.email + ': ' + code);
+                var verificationCode = speakeasy.totp({secret: 'APP_SECRET' + credentials.email});
+                console.log('Two factor code for ' + credentials.email + ': ' + verificationCode);
                     
-                updateRequestCode(credentials, code, function(result) {
-                    fn(null, { code: result });
+                updateRequestCode(credentials, verificationCode, function(error, result) {
+                    //var myMessage = {code: verificationCode, device: "Desktop"}; 
+ 
+                    // prepare a loopback template renderer
+                    //var renderer = loopback.template(path.resolve(__dirname, '../../common/views/verification-mail.ejs'));
+                    //var html_body = renderer(myMessage);
+
+                    if (error == null) {
+                        sendEmail(credentials, verificationCode, function(err, res) {
+                            if (err != null) {
+                                var err = new Error();
+                                err.error = 'An error occurred whilst sending the verification email';
+                                err.errorCode = 'MAIL_SERVER_ERROR';
+                                err.statusCode = 500;
+                                fn(null, err);
+                            } else {
+                                fn(null, { response: 'success' })
+                            }
+                        });
+                    } else {
+                        var err = new Error();
+                        err.error = 'An error occurred whilst updating data in the database';
+                        err.errorCode = 'DATABASE_ERROR';
+                        err.statusCode = 500;
+                        fn(null, err);
+                    }
                 });
             }
         });
@@ -62,11 +80,11 @@ module.exports = function(Account) {
     };
 
     function updateRequestCode(credentials, code, cb) {
-        Account.upsertWithWhere({ email: credentials.email }, { registerToken: code }, function(err, account) {
+        Account.upsertWithWhere({ email: credentials.email }, { registerToken: code }, function(err, res) {
             if (err){
-                cb(err);
+                cb(err, null);
             } else {
-                cb(account.registerToken);  
+                cb(null, res.registerToken);  
             }
         });
     };
@@ -77,6 +95,39 @@ module.exports = function(Account) {
                 cb(err, false);
             } else {
                 cb(null, true);  
+            }
+        });
+    };
+
+    function sendEmail(credentials, code, cb) {
+        console.log('Sending email...');
+        let transporter = nodemailer.createTransport({
+            host: process.env.MAIL_SERVER,
+            port: process.env.MAIL_PORT,
+            secure: false,
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASSWORD
+            }
+        });
+
+        // TODO: Translations
+        // TODO: Make a better email template
+        let mailOptions = {
+            from: 'Saxion Roosters <no-reply@saxionroosters.nl>',
+            to: credentials.email,
+            subject: 'Your verification code for Saxion Roosters',
+            text: 'Your verification code is ' + code,
+            html: '<p>Your verification code is <b>' + code + '</b></p>'
+        };
+    
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error){
+                console.log('Error: ' + error);
+                cb(error, false);
+            } else {
+                console.log('Message sent: %s', info.messageId);
+                cb(null, true);
             }
         });
     };

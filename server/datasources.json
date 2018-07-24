@@ -8,5 +8,9 @@
     "name": "database",
     "user": "user",
     "connector": "mysql"
+  },
+  "email": {
+    "name": "email",
+    "connector": "mail"
   }
 }
