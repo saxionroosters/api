@@ -5,6 +5,17 @@ const nodemailer = require('nodemailer');
 
 module.exports = function(Account) {
     require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
+
+    Account.disableRemoteMethodByName('prototype.__findById__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__destroyById__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__updateById__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__get__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__create__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__delete__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__count__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__exists__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__link__accessTokens', true);
+    Account.disableRemoteMethodByName('prototype.__unlink__accessTokens', true);
     
     Account.register = function(credentials, fn) {
         findAccount(credentials, function(res) {
@@ -132,10 +143,10 @@ module.exports = function(Account) {
         });
     };
 
-    Account.loginWithCode = function(credentials, fn) {
+    Account.verify = function(credentials, fn) {
         var err = new Error('Sorry, but that verification code does not work!');
         err.statusCode = 401;
-        err.code = 'LOGIN_FAILED';
+        err.code = 'VERIFICATION_FAILED';
       
         this.findOne({ where: { email: credentials.email } }, function(err, user) {
           var code = user.registerToken;
@@ -188,7 +199,8 @@ module.exports = function(Account) {
     );
     Account.remoteMethod(
         'requestCode', {
-            description: "Request a code to log in an user",
+            description: "Request a verification code to log in an user",
+            notes: ["Sends an email to the user with a generated verification code.\n", "Returns 'true' when the verification mail is successfully send;", "otherwise returns an error (with description)."],
             http: {
                 path: '/requestCode',
                 verb: 'post',
@@ -204,17 +216,16 @@ module.exports = function(Account) {
                 } 
             },
             returns: {
-                arg: 'code',
-                type: 'array',
-                root: true
+                arg: 'success',
+                type: 'string'
             }
         }
     );
     Account.remoteMethod(
-        'loginWithCode', {
-            description: "Log an user in with a code",
+        'verify', {
+            description: "Verify an user with a verification code",
             http: {
-                path: '/loginWithCode',
+                path: '/verify',
                 verb: 'post'
             },
             accepts: {

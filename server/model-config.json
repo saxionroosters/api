@@ -53,7 +53,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "loginWithCode": true,
+          "verify": true,
           "requestCode": true,
           "register": true,
           "logout": true
