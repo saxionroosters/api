@@ -12,7 +12,7 @@
     },
     "username": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "email": {
       "type": "string",
@@ -20,10 +20,11 @@
     },
     "registerDate": {
       "type": "date",
-      "required": true
+      "required": false
     },
     "registerToken": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "verificationToken": {
       "type": "string",

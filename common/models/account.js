@@ -21,10 +21,10 @@ module.exports = function(Account) {
         findAccount(credentials, function(res) {
             if (res != 0) {
                 var err = new Error();
-                err.error = 'Account already registered!';
-                err.errorCode = 'ACCOUNT_ALREADY_REGISTERED';
+                err.message = 'Account already registered!';
+                err.code = 'ACCOUNT_ALREADY_REGISTERED';
                 err.statusCode = 401;
-                fn(null, err);
+                fn(err, null);
             } else {
                 createAccount(credentials, function(result) {
                     fn(null, result);
@@ -37,10 +37,10 @@ module.exports = function(Account) {
         findAccount(credentials, function(res) {
             if (res <= 0 || res > 1) {
                 var err = new Error();
-                err.error = 'No account found with given email!';
-                err.errorCode = 'ACCOUNT_NOT_FOUND';
+                err.message = 'No account found with given email!';
+                err.code = 'ACCOUNT_NOT_FOUND';
                 err.statusCode = 404;
-                fn(null, err);
+                fn(err, null);
             } else {
                 var verificationCode = speakeasy.totp({secret: 'APP_SECRET' + credentials.email});
                 console.log('Two factor code for ' + credentials.email + ': ' + verificationCode);
@@ -56,20 +56,20 @@ module.exports = function(Account) {
                         sendEmail(credentials, verificationCode, function(err, res) {
                             if (err != null) {
                                 var err = new Error();
-                                err.error = 'An error occurred whilst sending the verification email';
-                                err.errorCode = 'MAIL_SERVER_ERROR';
+                                err.message = 'An error occurred whilst sending the verification email';
+                                err.code = 'MAIL_SERVER_ERROR';
                                 err.statusCode = 500;
-                                fn(null, err);
+                                fn(err, null);
                             } else {
-                                fn(null, { response: 'success' })
+                                fn(null, "success")
                             }
                         });
                     } else {
                         var err = new Error();
-                        err.error = 'An error occurred whilst updating data in the database';
-                        err.errorCode = 'DATABASE_ERROR';
+                        err.message = 'An error occurred whilst updating data in the database';
+                        err.code = 'DATABASE_ERROR';
                         err.statusCode = 500;
-                        fn(null, err);
+                        fn(err, null);
                     }
                 });
             }
@@ -84,7 +84,7 @@ module.exports = function(Account) {
     };
 
     function createAccount(credentials, cb) {
-        Account.create({username: credentials.email, email: credentials.email, password: 'password', registerDate: ''}, function(err, accountInstance) {
+        Account.create({username: credentials.email, email: credentials.email}, function(err, accountInstance) {
             console.log('account: ' + JSON.stringify(accountInstance));
             cb(accountInstance);
         });
@@ -144,9 +144,10 @@ module.exports = function(Account) {
     };
 
     Account.verify = function(credentials, fn) {
-        var err = new Error('Sorry, but that verification code does not work!');
-        err.statusCode = 401;
+        var err = new Error();
+        err.message = 'Sorry, but that verification code does not work!';
         err.code = 'VERIFICATION_FAILED';
+        err.statusCode = 401;
       
         this.findOne({ where: { email: credentials.email } }, function(err, user) {
           var code = user.registerToken;
@@ -216,7 +217,7 @@ module.exports = function(Account) {
                 } 
             },
             returns: {
-                arg: 'success',
+                arg: 'response',
                 type: 'string'
             }
         }
