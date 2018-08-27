@@ -1,4 +1,4 @@
-![saxionroosters](http://saxionroosters.nl/static/img/saxionroosters-logo-text-2.png)
+![saxionroosters](http://saxionroosters.nl/static/img/saxionroosters-logo-text-v4.png)
 -----
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/saxionroosters/api/blob/master/LICENSE)
