@@ -2,6 +2,7 @@
 -----
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/saxionroosters/api/blob/master/LICENSE)
+[![Project Status](https://img.shields.io/badge/project%20status-WIP-orange.svg)](https://github.com/saxionroosters/api)
 [![GitHub issues](https://img.shields.io/github/issues/saxionroosters/api.svg)](https://github.com/saxionroosters/api/issues?q=is%3Aopen+is%3Aissue)
 [![GitHub last commit](https://img.shields.io/github/last-commit/saxionroosters/api.svg)](https://github.com/saxionroosters/api/commits)
 
